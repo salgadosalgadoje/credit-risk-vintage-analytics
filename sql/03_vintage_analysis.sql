@@ -1,0 +1,2 @@
+-- Matriz de Cosechas por cohorte de originación y meses en libros (MOB).
+-- Curvas de deterioro y comparación de calidad crediticia entre cosechas.

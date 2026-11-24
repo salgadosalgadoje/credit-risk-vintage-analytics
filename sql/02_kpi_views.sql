@@ -1,0 +1,2 @@
+-- Vistas KPI de riesgo crediticio sobre el esquema estrella.
+-- Mora, exposición y pérdida para consumo de BI y gobierno de indicadores.

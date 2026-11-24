@@ -1,0 +1,2 @@
+-- Esquema Estrella Kimball del data warehouse de riesgo crediticio (credit_risk_dw).
+-- Dimensiones conformadas y tabla de hechos de originación y desempeño para el modelo analítico.
