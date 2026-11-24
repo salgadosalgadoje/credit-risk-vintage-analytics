@@ -1,7 +1,9 @@
 """Contrato de configuración del data warehouse: variables de entorno y URI SQLAlchemy."""
 
+import os
 from functools import lru_cache
 from pathlib import Path
+from typing import Any
 
 from pydantic import computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -23,6 +25,12 @@ class Settings(BaseSettings):
     postgres_host: str = "localhost"
     postgres_port: int = 5432
     raw_data_path: Path = Path("data/raw/accepted_2007_to_2018Q4.csv")
+    kaggle_api_token: str | None = None
+
+    def model_post_init(self, context: Any) -> None:
+        """Expone el token a kagglehub, que solo lo lee desde el entorno del proceso."""
+        if self.kaggle_api_token:
+            os.environ["KAGGLE_API_TOKEN"] = self.kaggle_api_token
 
     @computed_field
     @property
