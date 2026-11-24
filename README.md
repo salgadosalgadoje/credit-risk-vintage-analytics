@@ -61,6 +61,7 @@ credit-risk-vintage-analytics/
 ├── src/
 │   ├── __init__.py
 │   ├── config.py                    # Pydantic v2 settings and SQLAlchemy URI
+│   ├── download_data.py             # idempotent LendingClub download via kagglehub
 │   ├── etl_load.py                  # idempotent load with Pydantic contracts
 │   └── risk_stats.py                # cohort loss and vintage statistics
 ├── powerbi/
@@ -90,7 +91,7 @@ Requirements: Git, Docker, and Python 3.11 or newer.
    cd credit-risk-vintage-analytics
    ```
 
-2. Create the local environment file from the template and set a real password before the first start.
+2. Create the local environment file from the template. Set a real PostgreSQL password and `KAGGLE_API_TOKEN` (from [Kaggle API settings](https://www.kaggle.com/settings/api)) before the first download.
 
    ```powershell
    Copy-Item .env.example .env
@@ -111,7 +112,13 @@ Requirements: Git, Docker, and Python 3.11 or newer.
    pip install -r requirements.txt
    ```
 
-5. Place the LendingClub extract manually at `data/raw/accepted_2007_to_2018Q4.csv`. Do not commit it. `.gitignore` ignores `data/raw/*` and keeps only `data/raw/.gitkeep`.
+5. Download the LendingClub extract. The command is idempotent: when `data/raw/accepted_2007_to_2018Q4.csv` already exists and is larger than 100 MB, it exits without calling Kaggle.
+
+   ```powershell
+   python -m src.download_data
+   ```
+
+   The CSV stays on disk only. `.gitignore` ignores `data/raw/*` and keeps `data/raw/.gitkeep`.
 
 On macOS or Linux, replace the copy and activation lines with `cp .env.example .env` and `source .venv/bin/activate`.
 
