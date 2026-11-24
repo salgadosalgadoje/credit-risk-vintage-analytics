@@ -1,0 +1,9 @@
+# Extracto LendingClub (>1.5 GB): permanece en local y nunca se versiona.
+data/raw/*
+!data/raw/.gitkeep
+
+.env
+__pycache__/
+.venv/
+.pytest_cache/
+*.pbix~
