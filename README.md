@@ -128,4 +128,16 @@ On macOS or Linux, replace the copy and activation lines with `cp .env.example .
 - [x] **Phase 2: Kimball Star Schema DDL [Completed]** — conformed dimensions and the loan-performance fact in `sql/01_ddl_star_schema.sql`.
 - [x] **Phase 3: Idempotent ETL & Pydantic Validation [Completed]** — Polars extract, loan-level contracts, and a repeatable load into `credit_risk_dw`.
 - [x] **Phase 4: KPI Views & Vintage Cohort SQL [Completed]** — Default Rate, Charge-Off, LGD, ROI, and the quarterly vintage matrix in `sql/02_kpi_views.sql` and `sql/03_vintage_analysis.sql`.
-- [ ] **Phase 5: Statistical Testing & Power BI Dashboard** — SciPy checks on cohort curves, plus DAX measures, What-If scenarios, and RLS.
+- [x] **Phase 5A: Statistical Testing & Power BI Semantic Layer [Completed]** — SciPy hypothesis tests, automated PostgreSQL integrity tests, the star-schema data dictionary, DAX measures, What-If scenarios, and RLS definitions.
+- [ ] **Phase 5B: Power BI Dashboard Build** — Assemble and validate the interactive report pages and visuals in Power BI Desktop.
+
+## Phase 5A: Statistical Findings
+
+The following results are from the deployed warehouse (`2,260,668` total loans) and the `1,348,099` loans with matured performance statuses. They are descriptive and inferential findings on the historical LendingClub portfolio, not causal estimates.
+
+- **Risk segment and default are associated:** Pearson's chi-square is `80,967.18` with 2 degrees of freedom (`p < 0.001`); Cramér's V is `0.245`.
+- **Matured default rates rise by segment:** Prime `10.64%` (95% Wilson CI `10.57%–10.72%`, n=`628,295`), Near-Prime `25.18%` (`25.07%–25.30%`, n=`583,980`), and Subprime `40.80%` (`40.54%–41.06%`, n=`135,824`).
+- **Loss severity also rises by segment:** portfolio LGD is Prime `56.29%`, Near-Prime `64.00%`, and Subprime `70.90%`.
+- **The tested distributions differ across outcomes and grades:** Welch/Mann–Whitney comparisons of FICO, DTI, and interest rate between defaults and fully paid loans, and ANOVA/Kruskal–Wallis comparisons of DTI and interest rate across grades A–G, all return `p < 0.001`.
+
+Run the statistical report with `python -m src.risk_stats`. Run the PostgreSQL 16 integration suite with `pytest -v`; it checks the deployed schema, loan volume and ranges, segment risk ordering, vintage monotonicity, and the statistical report's p-values and Wilson intervals.
