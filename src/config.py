@@ -50,3 +50,5 @@ class Settings(BaseSettings):
 def get_settings() -> Settings:
     """Devuelve la configuración validada, cacheada por proceso."""
     return Settings()
+
+settings = Settings()
