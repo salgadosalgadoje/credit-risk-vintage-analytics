@@ -126,6 +126,6 @@ On macOS or Linux, replace the copy and activation lines with `cp .env.example .
 
 - [x] **Phase 1: Infrastructure & Data Governance [Completed]** — Dockerized PostgreSQL 16, secret and raw-data git rules, Pydantic settings, and the project scaffold.
 - [x] **Phase 2: Kimball Star Schema DDL [Completed]** — conformed dimensions and the loan-performance fact in `sql/01_ddl_star_schema.sql`.
-- [ ] **Phase 3: Idempotent ETL & Pydantic Validation** — Polars extract, loan-level contracts, and a repeatable load into `credit_risk_dw`.
+- [x] **Phase 3: Idempotent ETL & Pydantic Validation [Completed]** — Polars extract, loan-level contracts, and a repeatable load into `credit_risk_dw`.
 - [ ] **Phase 4: KPI Views & Vintage Cohort SQL** — Default Rate, Charge-Off, LGD, ROI, and the quarterly vintage matrix.
 - [ ] **Phase 5: Statistical Testing & Power BI Dashboard** — SciPy checks on cohort curves, plus DAX measures, What-If scenarios, and RLS.
